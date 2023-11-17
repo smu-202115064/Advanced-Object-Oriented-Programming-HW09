@@ -7,6 +7,8 @@ public class Calculator {
 
     public Calculator() {
         state = new Start(this);
+        operand1 = 0;
+        operand2 = 0;
     }
 
     public void setState(State state) {
