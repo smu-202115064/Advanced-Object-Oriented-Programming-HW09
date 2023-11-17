@@ -52,4 +52,23 @@ public class Calculator {
     void processEqualOperator() {
         state.processEqualOperator();
     }
+
+    void calculate() {
+        if (operator == '+') {
+            result = operand1 + operand2;
+        }
+        else if (operator == '-') {
+            result = operand1 - operand2;
+        }
+        else if (operator == '*') {
+            result = operand1 * operand2;
+        }
+        else if (operator == '/') {
+            // TODO: Divide by Zero 예외 처리를 해야 할 까?
+            result = operand1 / operand2;
+        }
+        else if (operator == '%') {
+            result = operand1 % operand2;
+        }
+    }
 }
