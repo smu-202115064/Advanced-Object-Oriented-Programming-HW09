@@ -9,4 +9,10 @@ public class Operand2 implements State {
     public void processDigit(int digit) {
         calculator.setOperand2(calculator.getOperand2() * 10 + digit);
     }
+
+    @Override
+    public void processEqualOperator() {
+        calculator.calculate();
+        calculator.setState(new Start(calculator));
+    }
 }
