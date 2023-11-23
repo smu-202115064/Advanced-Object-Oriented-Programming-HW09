@@ -1,18 +1,16 @@
 public class Operand1 implements State {
-    private Calculator calculator;
+    Calculator calc;
 
-    public Operand1(Calculator calculator) {
-        this.calculator = calculator;
+    public Operand1(Calculator calc) {
+        this.calc = calc;
     }
 
-    @Override
     public void processDigit(int digit) {
-        calculator.setOperand1(calculator.getOperand1() * 10 + digit);
+        calc.setOperand1(digit);
     }
 
-    @Override
     public void processArithmeticOperator(char ch) {
-        calculator.setOperator(ch);
-        calculator.setState(new Operator(calculator));
+        calc.setOperator(ch);
+        calc.changeToOperator();
     }
 }

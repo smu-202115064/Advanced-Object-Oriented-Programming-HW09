@@ -1,76 +1,101 @@
 public class Calculator {
-    private State state;
-    private int operand1;
-    private int operand2;
-    private char operator;
-    private int result;
+    State state;
+    State operand1;
+    State operand2;
+    State operator;
+    State start;
+    String operand1Str;
+    String operand2Str;
+    char op;
+    int op1, op2, result;
 
     public Calculator() {
-        state = new Start(this);
-        operand1 = 0;
-        operand2 = 0;
+        start = new Start(this);
+        operand1 = new Operand1(this);
+        operand2 = new Operand2(this);
+        operator = new Operator(this);
+        state = start;
+        init();
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void processDigit(int digit) {
+        state.processDigit(digit);
     }
 
-    public int getOperand1() {
-        return operand1;
+    public void processArithmeticOperator(char ch) {
+        state.processArithmeticOperator(ch);
     }
 
-    public void setOperand1(int operand1) {
-        this.operand1 = operand1;
+    public void processEqualOperator() {
+        state.processEqualOperator();
     }
 
-    public int getOperand2() {
-        return operand2;
+    public void setOperand1(int digit) {
+        operand1Str += digit;
     }
 
-    public void setOperand2(int operand2) {
-        this.operand2 = operand2;
+    public void setOperand2(int digit) {
+        operand2Str += digit;
     }
 
-    public char getOperator() {
-        return operator;
+    public void changeToOperand1() {
+        state = operand1;
     }
 
-    public void setOperator(char operator) {
-        this.operator = operator;
+    public void changeToOperand2() {
+        state = operand2;
+    }
+
+    public void changeToOperator() {
+        state = operator;
+    }
+
+    public void changeToStart() {
+        op1 = Integer.parseInt(operand1Str);
+        op2 = Integer.parseInt(operand2Str);
+        switch (op) {
+            case '+':
+                result = op1 + op2;
+                break;
+            case '-':
+                result = op1 - op2;
+                break;
+            case '*':
+                result = op1 * op2;
+                break;
+            case '/':
+                result = op1 / op2;
+                break;
+            case '%':
+                result = op1 % op2;
+                break;
+        }
+        state = start;
+        init();
+    }
+
+    public void setOperator(char ch) {
+        this.op = ch;
     }
 
     public int getResult() {
         return result;
     }
 
-    void processDigit(int digit) {
-        state.processDigit(digit);
+    public int getOp1() {
+        return op1;
     }
 
-    void processArithmeticOperator(char ch) {
-        state.processArithmeticOperator(ch);
+    public int getOp2() {
+        return op2;
     }
 
-    void processEqualOperator() {
-        state.processEqualOperator();
+    public int getOp() {
+        return op;
     }
 
-    void calculate() {
-        if (operator == '+') {
-            result = operand1 + operand2;
-        }
-        else if (operator == '-') {
-            result = operand1 - operand2;
-        }
-        else if (operator == '*') {
-            result = operand1 * operand2;
-        }
-        else if (operator == '/') {
-            // TODO: Divide by Zero 예외 처리를 해야 할 까?
-            result = operand1 / operand2;
-        }
-        else if (operator == '%') {
-            result = operand1 % operand2;
-        }
+    private void init() {
+        operand1Str = "";
+        operand2Str = "";
     }
 }
